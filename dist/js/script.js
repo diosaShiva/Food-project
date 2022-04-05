@@ -309,12 +309,17 @@ window.addEventListener ('DOMContentLoaded', function() {
 
             const formData = new FormData (form);
 
+            const object = {};
+            formData.forEach (function (value, key) {
+                object[key] = value;
+            });
+
             fetch ('js/server.php', {
                 method: "POST",
-                //headers: {
-                //    'Content-type': 'application/json'
-                //},
-                body: formData
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify (object)
             })
             .then (data => data.text ())
             .then (data => {
@@ -326,14 +331,6 @@ window.addEventListener ('DOMContentLoaded', function() {
             }).finally( () => {
                 form.reset();
             });
-
-            //const object = {};
-            //formData.forEach (function (value, key) {
-            //    object[key] = value;
-           // });
-
-            //const json = JSON.stringify (object);
-            //request.send (json);
         }); 
     }
 
